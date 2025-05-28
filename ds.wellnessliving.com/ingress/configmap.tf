@@ -24,17 +24,13 @@ variable "configmap_metadata" {
     {
       name      = "wl-ds-server-vars-conf"
       namespace = "ingress-nginx"
-    },
-    {
-      name      = "wl-ds-server-vars-conf-test"
-      namespace = "ingress-nginx"
     }
   ]
 }
 
 locals {
-  config_files   = ["global-functions.lua", "server_logic.conf", "global_maps.conf", "rewrite_dispatcher.lua", "server_vars.conf", "server_vars_test.conf"]
-  config_content = [for filename in local.config_files : file("${path.module}/configs/${filename}")]
+  config_files   = ["global-functions.lua", "server_logic.conf", "global_maps.conf", "rewrite_dispatcher.lua", "server_vars.conf"]
+  config_content = [for filename in local.config_files : file("../configs/${filename}")]
 
   configmaps = [
     for idx, metadata in var.configmap_metadata : {
